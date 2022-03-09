@@ -1,7 +1,23 @@
+install_requirements:
+	@pip install -r requirements.txt
+
+install:
+	@pip install .
+
 install_dev:
-	@echo "instalando pacote com flag -e"
 	@pip install -e .
 
-install_final:
-	@echo "instalando pacote sem flag -e"
-	@pip install .
+uninstall:
+	@pip uninstall -y toto
+
+test:
+	@coverage run -m pytest tests/*.py
+	@coverage report -m --omit=$(VIRTUAL_ENV)/lib/python*
+
+clean:
+	@rm -f */version.txt
+	@rm -f .coverage
+	@rm -Rf */__pycache__
+	@rm -Rf */*.pyc
+
+all: install_requirements install test
